@@ -1,0 +1,27 @@
+# محیط مجازی
+env/
+venv/
+.env
+
+# کش‌های پایتون
+__pycache__/
+*.py[cod]
+*.pyo
+
+# فایل‌های لاگ و دیتابیس لوکال
+*.log
+*.sqlite3
+
+# فایل‌های خروجی و بسته‌بندی
+build/
+dist/
+*.egg-info/
+
+# فایل‌های سیستمی
+.DS_Store
+Thumbs.db
+
+# فایل‌های IDE
+.vscode/
+.idea/
+*.swp
