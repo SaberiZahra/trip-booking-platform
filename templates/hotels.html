@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="fa" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>هتل | KermanTrip</title>
+    <link rel="stylesheet" href="{% static 'css/hotel.css' %}">
+</head>
+<body>
+
+
+    <header class="navbar">
+        <nav class="nav-container">
+    <div class="logo"></div><img src="{% static 'images/logo2.png'%}" height="34"  height="10" />
+          <ul class="nav-links">
+            <li><a href="/">خانه</a></li>
+          </ul>
+        </nav>
+    </header>
+      
+
+    <section class="hotel-section">
+        <h1>هتل‌های پیشنهادی</h1>
+        <div class="hotel-cards">
+            <div class="card">
+                <img src="{% static 'images/dest/dest1.jpeg' %}" alt="بوتیک هتل وکیل (کاروانیکا) کرمان">
+                <h2>بوتیک هتل وکیل (کاروانیکا) کرمان</h2>
+                <p>هتلی با خدمات عالی و امکانات مدرن.</p>
+                <form action="/panel/" method="get">
+                    <button type="submit" class="reserve-btn">رزرو هتل</button>
+                </form>
+                
+            </div>
+            <div class="card">
+                <img src="{% static 'images/dest/jahangardi.jpg' %}"  alt="هتل 2">
+                <h2>هتل پارس کرمان</h2>
+                <p>هتلی با دکوراسیون شیک و پذیرایی حرفه‌ای.</p>
+                <form action="/panel/" method="get">
+                    <button type="submit" class="reserve-btn">رزرو هتل</button>
+                </form>
+                
+            </div>
+            <div class="card">
+                <img src="{% static 'images/dest/parshotel.jpg' %}"  alt="هتل 2">
+                <h2>هتل جهانگردی </h2>
+                <p>هتلی در قلب کرمان</p>
+                <form action="/panel/" method="get">
+                    <button type="submit" class="reserve-btn">رزرو هتل</button>
+                </form>
+                
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
