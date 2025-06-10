@@ -1,0 +1,30 @@
+{% extends 'admin/base.html' %}
+{% block title %}افزودن/ویرایش رستوران{% endblock %}
+
+{% block content %}
+<h1>{% if restaurant %}ویرایش{% else %}افزودن{% endif %} رستوران</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    <label>نام رستوران:</label><br>
+    <input type="text" name="name" value="{{ restaurant.name|default_if_none:'' }}"><br>
+
+    <label>موقعیت:</label><br>
+    <input type="text" name="location" value="{{ restaurant.location|default_if_none:'' }}"><br>
+
+    <label>توضیحات:</label><br>
+    <textarea name="description">{{ restaurant.description|default_if_none:'' }}</textarea><br>
+
+    <label>میانگین قیمت (تومان):</label><br>
+    <input type="number" name="average_price" value="{{ restaurant.average_price|default_if_none:'' }}"><br>
+
+    <label>
+        <input type="checkbox" name="is_available" {% if restaurant.is_available %}checked{% endif %}>
+        در دسترس
+    </label><br><br>
+
+    <button type="submit">ذخیره</button>
+</form>
+
+<a href="{% url 'main:admin_restaurants' %}">بازگشت به رستوران‌ها</a>
+{% endblock %}

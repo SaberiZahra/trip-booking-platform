@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>ثبت‌نام | KermanTrip</title>
+    <link rel="stylesheet" href="{% static 'css/logincss.css' %}">
+</head>
+<body>
+
+  <form class="form" method="post" action="{% url 'main:register' %}">
+    {% csrf_token %}
+    <p class="form-title">ساخت حساب کاربری</p>
+
+    {% if messages %}
+    {% for message in messages %}
+      <div class="alert">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+
+    {% if form.errors %}
+      <div class="alert">
+        لطفاً خطاهای زیر را بررسی کنید:
+        <ul>
+          {% for field in form %}
+            {% for error in field.errors %}
+              <li>{{ error }}</li>
+            {% endfor %}
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+    <div class="input-container">
+      {{ form.username.label_tag }}
+      {{ form.username }}
+    </div>
+
+    <div class="input-container">
+      {{ form.email.label_tag }}
+      {{ form.email }}
+    </div>    
+
+    <div class="input-container">
+      {{ form.password1.label_tag }}
+      {{ form.password1 }}
+    </div>
+
+    <div class="input-container">
+      {{ form.password2.label_tag }}
+      {{ form.password2 }}
+    </div>
+
+    <button type="submit" class="submit">ثبت‌نام</button>
+
+    <p class="signup-link">
+      حساب دارید؟ <a href="{% url 'main:login' %}">وارد شوید</a>
+    </p>
+  </form>
+
+</body>
+</html>

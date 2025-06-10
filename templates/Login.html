@@ -1,13 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
 
-{% if messages %}
-  {% for message in messages %}
-    <div class="alert">{{ message }}</div>
-  {% endfor %}
-{% endif %}
-
-
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -17,26 +10,31 @@
 </head>
 <body>
   
-  <form class="form">
+  <form class="form" method="post" action="{% url 'main:login' %}">
+    {% csrf_token %}
     <p class="form-title">ورود به حساب کاربری</p>
-     <div class="input-container">
-       <input type="email" placeholder="ایمیل">
-       <span>
-       </span>
-   </div>
-   <div class="input-container">
-       <input type="password" placeholder="رمز عبور">
-     </div>
-      <button type="submit" class="submit" href="/panel/">
-     ورود
-   </button>
+  
+    {% if messages %}
+    {% for message in messages %}
+      <div class="alert">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
 
-   <p class="signup-link">
-     No account?
-     <a href="/panel/">ثبت نام</a>
-   </p>
-</form>
+    <div class="input-container">
+      <input type="text" name="username" placeholder="نام کاربری" required>
+    </div>
+  
+    <div class="input-container">
+      <input type="password" name="password" placeholder="رمز عبور" required>
+    </div>
+  
+    <button type="submit" class="submit">ورود</button>
+
+    <p class="signup-link">
+      اکانتی ندارید؟ <a href="{% url 'main:register' %}">ثبت نام</a>
+    </p>
+
+  </form>  
  
-
 </body>
 </html>

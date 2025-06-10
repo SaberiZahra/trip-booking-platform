@@ -19,18 +19,15 @@
     </div>
     <div class="main-content">
         <div class="header">
-            <h1>سلام، {{ request.user.username }} 👋</h1>
-            <p>خوش آمدید به پنل کاربری شما</p>
+            <h1>سلام {{ request.user.username }} 👋</h1>
+            <p>به پنل کاربری خود خوش آمدید</p>
         </div>
         <div class="cards">
             <div class="card">
                 <h3>نام کاربری</h3>
                 <p>{{ request.user.username }}</p>
             </div>
-            <div class="card">
-                <h3>ایمیل</h3>
-                <p>{{ request.user.email }}</p>
-            </div>
+        
             <div class="card">
                 <h3>تعداد رزروها</h3>
                 <p>0</p> <!-- می‌تونی بعداً دیتای واقعی بیاری -->

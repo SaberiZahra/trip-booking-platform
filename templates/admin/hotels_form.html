@@ -1,0 +1,30 @@
+{% extends 'admin/base.html' %}
+{% block title %}افزودن/ویرایش هتل{% endblock %}
+
+{% block content %}
+<h1>{% if hotel %}ویرایش{% else %}افزودن{% endif %} هتل</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    <label>نام هتل:</label><br>
+    <input type="text" name="name" value="{{ hotel.name|default_if_none:'' }}"><br>
+
+    <label>موقعیت:</label><br>
+    <input type="text" name="location" value="{{ hotel.location|default_if_none:'' }}"><br>
+
+    <label>توضیحات:</label><br>
+    <textarea name="description">{{ hotel.description|default_if_none:'' }}</textarea><br>
+
+    <label>هزینه هر شب (تومان):</label><br>
+    <input type="number" name="price_per_night" value="{{ hotel.price_per_night|default_if_none:'' }}"><br>
+
+    <label>
+        <input type="checkbox" name="is_available" {% if hotel.is_available %}checked{% endif %}>
+        در دسترس
+    </label><br><br>
+
+    <button type="submit">ذخیره</button>
+</form>
+
+<a href="{% url 'main:admin_hotels' %}">بازگشت به هتل‌ها</a>
+{% endblock %}
