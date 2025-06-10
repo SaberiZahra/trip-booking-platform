@@ -1,60 +1,9 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
 {% load static %}
-<html lang="en-US" dir="rtl">
+{% block title %}KermanTrip | خانه{% endblock %}
 
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-
-    <!-- ===============================================-->
-    <!--    Document Title-->
-    <!-- ===============================================-->
-    <title>KermanTrip | Travel Agency Landing Page UI</title>
-
-
-    <!-- ===============================================-->
-    <!--    Favicons-->
-    <!-- ===============================================-->
-
-    <link rel="shortcut icon" href="{% static 'images/favicons/favicon.ico' %}">
-    <link rel="manifest" href="{% static 'images/favicons/manifest.json' %}">
-    <meta name="msapplication-TileImage" content="{% static 'images/favicons/mstile-150x150.png' %}">
-    <meta name="theme-color" content="#ffffff">
-
-
-    <!-- ===============================================-->
-    <!--    Stylesheets-->
-    <!-- ===============================================-->
-    <link rel="stylesheet" href="{% static 'css/theme-rtl.min.css' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Volkhov:wght@700&display=swap" rel="stylesheet">
-    <script src="{% static 'js/theme.min.js' %}"></script>
-  </head>
-  <body>
-    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/favicons/apple-touch-icon.png' %}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicons/favicon-32x32.png' %}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicons/favicon-16x16.png' %}">
-    <link rel="shortcut icon" href="{% static 'images/favicons/favicon.ico' %}">
-    <link rel="manifest" href="{% static 'images/favicons/manifest.json' %}">
-    
-    <!-- ===============================================-->
-    <!--    Main Content-->
-    <!-- ===============================================-->
-    <main class="main" id="top">
-      <nav class="navbar navbar-expand-lg navbar-light fixed-top py-5 d-block" data-navbar-on-scroll="data-navbar-on-scroll">
-        <div class="container"><a class="navbar-brand" href="home.html"><img src="{% static 'images/logo2.png'%}" height="34" alt="logo" /></a>
-          <div class="collapse navbar-collapse border-top border-lg-0 mt-4 mt-lg-0" id="navbarSupportedContent">
-            <ul class="navbar-nav ms-auto pt-2 pt-lg-0 font-base align-items-lg-center align-items-start">
-              <li class="nav-item px-3 px-xl-4"><a class="nav-link fw-medium" aria-current="page" href="#خدمات">خدمات</a></li>
-              <li class="nav-item px-3 px-xl-4"><a class="nav-link fw-medium" aria-current="page" href="/hotels/">هتل ها</a></li>
-              <li class="nav-item px-3 px-xl-4"><a class="nav-link fw-medium" aria-current="page" href="#رستوران ها">رستوران ها</a></li>
-              <li class="nav-item px-3 px-xl-4"><a class="nav-link fw-medium" aria-current="page" href="#مکان گردشگری">مکان گردشگری</a></li>
-              <li class="nav-item px-3 px-xl-4"><a class="btn btn-outline-dark order-1 order-lg-0 fw-medium" href="/login/">ثبت نام/ ورود </a></li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+{% block content %}
+  <!-- Hero Section -->
       <section style="padding-top: 7rem;">
         <div class="bg-holder" style="background-image:url(images/hero/hero-bg.svg);">
         </div>
@@ -79,8 +28,6 @@
       </section>
 
 
-      <!-- ============================================-->
-      <!-- <section> begin ============================-->
       <section class="pt-5 pt-md-9" id="خدمات">
 
         <div class="container">
@@ -117,14 +64,8 @@
         </div><!-- end of .container-->
 
       </section>
-      <!-- <section> close ============================-->
-      <!-- ============================================-->
+  
 
-
-
-
-      <!-- ============================================-->
-      <!-- <section> begin ============================-->
       <section class="pt-5" id="هتل ها">
 
         <div class="container">
@@ -165,14 +106,8 @@
         </div><!-- end of .container-->
 
       </section>
-      <!-- <section> close ============================-->
-      <!-- ============================================-->
 
 
-
-
-      <!-- ============================================-->
-      <!-- <section> begin ============================-->
       <section id="رستوران ها">
 
         <div class="container">
@@ -225,14 +160,8 @@
         </div><!-- end of .container-->
 
       </section>
-      <!-- <section> close ============================-->
-      <!-- ============================================-->
+     
 
-
-
-
-      <!-- ============================================-->
-      <!-- <section> begin ============================-->
       <section id="مکان گردشگری">
 
         <div class="container">
@@ -266,11 +195,8 @@
         </div><!-- end of .container-->
 
       </section>
-      <!-- <section> close ============================-->
-      <!-- ============================================-->
+     
 
-      <!-- ============================================-->
-      <!-- <section> begin ============================-->
       <section class="pt-6">
 
         <div class="container">
@@ -294,55 +220,7 @@
         </div><!-- end of .container-->
 
       </section>
-      <!-- <section> close ============================-->
-      <!-- ============================================-->
-
-
-
-
-      <!-- ============================================-->
-      <!-- <section> begin ============================-->
-      <section class="pb-0 pb-lg-4">
-
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-3 col-md-7 col-12 mb-4 mb-md-6 mb-lg-0 order-0"> <img class="mb-4" src="{% static 'images/logo.png'%}" width="150" alt="jadoo" />
-              <p class="fs--1 text-secondary mb-0 fw-medium">با KermanTrip، سفر به کرمان فقط یک کلیک فاصله داره!از کشف جاذبه‌های تاریخی و طبیعی کرمان تا رزرو هتل، رستوران و تور—all in one place.</p>
-            </div>
-            <div class="col-lg-2 col-md-4 mb-4 mb-lg-0 order-lg-1 order-md-2">
-              <h4 class="footer-heading-color fw-bold font-sans-serif mb-3 mb-lg-4">Company</h4>
-              <ul class="list-unstyled mb-0">
-                <li class="mb-2"><a class="link-900 fs-1 fw-medium text-decoration-none" href="#!">تماس با ما</a></li>
-                <li class="mb-2"><a class="link-900 fs-1 fw-medium text-decoration-none" href="#!">09---------</a></li>
-
-              </ul>
-          </div>
-        </div><!-- end of .container-->
-      </section>
-      <!-- <section> close ============================-->
-      <!-- ============================================-->
-
-
-      <div class="py-5 text-center">
-        <p class="mb-0 text-secondary fs--1 fw-medium">All rights KermanTrip </p>
-      </div>
-    </main>
-    <!-- ===============================================-->
-    <!--    End of Main Content-->
-    <!-- ===============================================-->
-
-
-
-
-    <!-- ===============================================-->
-    <!--    JavaScripts-->
-    <!-- ===============================================-->
-
-    <script src="{% static 'js/theme.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap-navbar.js' %}"></script>
-
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;family=Volkhov:wght@700&amp;display=swap" rel="stylesheet">
-  </body>
-
-</html>
+      
+      
+     
+{% endblock %}

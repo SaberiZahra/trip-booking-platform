@@ -1,0 +1,29 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-lg navbar-light fixed-top py-5 d-block" data-navbar-on-scroll="data-navbar-on-scroll">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'main:home' %}">
+        <img src="{% static 'images/logo2.png' %}" height="34" alt="logo">
+      </a>
+      <div class="collapse navbar-collapse border-top border-lg-0 mt-4 mt-lg-0" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto pt-2 pt-lg-0 font-base align-items-lg-center align-items-start">
+          <li class="nav-item px-3 px-xl-4"><a class="nav-link fw-medium" href="#خدمات">خدمات</a></li>
+          <li class="nav-item px-3 px-xl-4"><a class="nav-link fw-medium" href="/hotels/">هتل ها</a></li>
+          <li class="nav-item px-3 px-xl-4"><a class="nav-link fw-medium" href="#رستوران ها">رستوران ها</a></li>
+          <li class="nav-item px-3 px-xl-4"><a class="nav-link fw-medium" href="#مکان گردشگری">مکان گردشگری</a></li>
+  
+          {% if user.is_authenticated %}
+            {% if user.is_staff %}
+              <li class="nav-item px-3 px-xl-4"><a class="btn btn-outline-dark fw-medium" href="/admin/">پنل ادمین</a></li>
+            {% else %}
+              <li class="nav-item px-3 px-xl-4"><a class="btn btn-outline-dark fw-medium" href="{% url 'main:panel' %}">پنل کاربری</a></li>
+            {% endif %}
+            <li class="nav-item px-3 px-xl-4"><a class="nav-link fw-medium" href="{% url 'main:logout' %}">خروج</a></li>
+          {% else %}
+            <li class="nav-item px-3 px-xl-4"><a class="btn btn-outline-dark fw-medium" href="{% url 'main:login' %}">ثبت‌نام/ورود</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+  

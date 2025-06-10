@@ -1,30 +1,29 @@
-<!DOCTYPE html>
 {% load static %}
-<html lang="fa" dir="rtl">
+<!DOCTYPE html>
+<html lang="en-US" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>{% block title %}پنل مدیریت{% endblock %}</title>
-  <link rel="stylesheet" href="{% static 'css/admin_panel.css' %}">
-  <!-- Chart.js CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}KermanTrip{% endblock %}</title>
+
+  <!-- Favicons و استایل‌های مشترک -->
+  <link rel="shortcut icon" href="{% static 'images/favicons/favicon.ico' %}">
+  <link rel="manifest" href="{% static 'images/favicons/manifest.json' %}">
+  <meta name="msapplication-TileImage" content="{% static 'images/favicons/mstile-150x150.png' %}">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="{% static 'css/theme-rtl.min.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Volkhov:wght@700&display=swap" rel="stylesheet">
+  <script src="{% static 'js/theme.min.js' %}"></script>
 </head>
+
 <body>
-  <div class="sidebar">
-    <h2>KermanTrip</h2>
-    <ul>
-      <li><a href="{% url 'main:admin_dashboard' %}">داشبورد</a></li>
-      <li><a href="{% url 'main:admin_hotels' %}">هتل‌ها</a></li>
-      <li><a href="{% url 'main:admin_restaurants' %}">رستوران‌ها</a></li>
-      <li><a href="{% url 'main:admin_users' %}">کاربران</a></li>
-      <li><a href="{% url 'main:admin_reservations' %}">رزروها</a></li>
-      <li><a href="{% url 'main:logout' %}">خروج</a></li>
-    </ul>
-  </div>
-
-  <div class="main-content">
-    {% block content %}{% endblock %}
-  </div>
-
-  <script src="{% static 'js/admin_panel.js' %}"></script>
+  {% include 'partials/header.html' %}
+  <main class="main" id="top">
+      {% block content %}{% endblock %}
+  </main>
+  {% include 'partials/footer.html' %}
+  {% include 'partials/scripts.html' %}
 </body>
 </html>
