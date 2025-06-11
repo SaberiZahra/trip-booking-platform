@@ -1,0 +1,22 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/panel.css' %}">
+
+<div class="container">
+  <h2>{{ hotel.name }}</h2>
+  <img src="{% static 'images/hotels/default.jpg' %}" alt="{{ hotel.name }}" style="max-width:100%;border-radius:8px">
+  <p><strong>مکان:</strong> {{ hotel.location }}</p>
+  <p><strong>قیمت هر شب:</strong> {{ hotel.price_per_night }} تومان</p>
+  <p>{{ hotel.description }}</p>
+
+  {% if user.is_authenticated %}
+  <hr>
+  <h3>رزرو این هتل</h3>
+  <form method="post" action="{% url 'main:reserve_hotel' hotel.id %}" class="edit-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn-save">رزرو</button>
+  </form>
+  {% else %}
+  <p><a href="{% url 'main:login' %}">برای رزرو وارد شوید.</a></p>
+  {% endif %}
+</div>

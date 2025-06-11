@@ -1,0 +1,78 @@
+{% load jalali_tags %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/panel.css' %}">
+
+<div class="container">
+
+    <h2>سلام {{ request.user.username }}! 👋</h2>
+    <p>شما {{ reservation_count }} رزرو ثبت کرده‌اید.</p>
+
+    <h3>رزرو هتل‌ها</h3>
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>نام هتل</th>
+                <th>تاریخ ورود</th>
+                <th>تاریخ خروج</th>
+                <th>شب‌ماندن</th>
+                <th>قیمت هر شب</th>
+                <th>جمع کل</th>
+                <th>عملیات</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in hotel_reservations %}
+            <tr>
+                <td>{{ r.content_object.name }}</td>
+                <td>{{ r.check_in|to_jalali }}</td>
+                <td>{{ r.check_out|to_jalali }}</td>
+                <td>{{ r.nights }}</td>
+                <td>{{ r.unit_price }}</td>
+                <td>{{ r.total_price }}</td>
+                <td>
+                    <a href="{% url 'main:reservation_edit' r.id %}">ویرایش</a> |
+                    <form method="post" action="{% url 'main:reservation_delete' r.id %}" class="delete-form" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" onclick="return confirm('آیا مطمئن هستید که می‌خواهید حذف شود؟');">حذف</button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="7">هیچ رزروی وجود ندارد.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>رزرو رستوران‌ها</h3>
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>نام رستوران</th>
+                <th>قیمت</th>
+                <th>تاریخ ثبت</th>
+                <th>عملیات</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in restaurant_reservations %}
+            <tr>
+                <td>{{ r.content_object.name }}</td>
+                <td>{{ r.unit_price }}</td>
+                <td>{{ r.reservation_date|to_jalali}}</td>
+                {% comment %} <td>{{ r.reservation_date|date:"Y-m-d H:i" }}</td> {% endcomment %}
+
+                <td>
+                    <a href="{% url 'main:reservation_edit' r.id %}">ویرایش</a> |
+                    <form method="post" action="{% url 'main:reservation_delete' r.id %}" class="delete-form" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" onclick="return confirm('آیا مطمئن هستید که می‌خواهید حذف شود؟');">حذف</button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="4">رزروی ثبت نشده.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>

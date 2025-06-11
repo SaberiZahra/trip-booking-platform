@@ -1,0 +1,21 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/panel.css' %}">
+
+<div class="container">
+  <h2>{{ restaurant.name }}</h2>
+  <img src="{% static 'images/restaurants/default.jpg' %}" alt="{{ restaurant.name }}" style="max-width:100%;border-radius:8px">
+  <p><strong>مکان:</strong> {{ restaurant.location }}</p>
+  <p><strong>قیمت سرانه:</strong> {{ restaurant.average_price }} تومان</p>
+  <p>{{ restaurant.description }}</p>
+
+  {% if user.is_authenticated %}
+  <hr>
+  <h3>رزرو میز</h3>
+  <form method="post" action="{% url 'main:reserve_restaurant' restaurant.id %}">
+      {% csrf_token %}
+      <button type="submit" class="btn-save">رزرو</button>
+  </form>
+  {% else %}
+  <p><a href="{% url 'main:login' %}">برای رزرو وارد شوید.</a></p>
+  {% endif %}
+</div>

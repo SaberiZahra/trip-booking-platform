@@ -1,26 +1,49 @@
 {% load static %}
 
-<section class="pb-0 pb-lg-4">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-3 col-md-7 col-12 mb-4 mb-md-6 mb-lg-0 order-0">
-          <img class="mb-4" src="{% static 'images/logo.png' %}" width="150" alt="KermanTrip">
-          <p class="fs--1 text-secondary mb-0 fw-medium">
-            با KermanTrip، سفر به کرمان فقط یک کلیک فاصله داره ...
-          </p>
-        </div>
-        <div class="col-lg-2 col-md-4 mb-4 mb-lg-0 order-lg-1 order-md-2">
-          <h4 class="footer-heading-color fw-bold font-sans-serif mb-3 mb-lg-4">Company</h4>
-          <ul class="list-unstyled mb-0">
-            <li class="mb-2"><a class="link-900 fs-1 fw-medium text-decoration-none" href="#!">تماس با ما</a></li>
-            <li class="mb-2"><a class="link-900 fs-1 fw-medium text-decoration-none" href="#!">09---------</a></li>
-          </ul>
-        </div>
+<footer class="bg-light pt-5">
+  <div class="container">
+    <div class="row gy-4 justify-content-between">
+    
+
+      <!-- Logo and Description -->
+      <div class="col-lg-5 col-md-6 d-flex align-items-center flex-wrap">
+        <img src="{% static 'images/logo.png' %}" width="150" alt="KermanTrip" class="me-4 mb-2 mb-md-0">
+        <p class="text-secondary fw-medium mb-0">
+          <strong>KermanTrip</strong>، تجربه‌ای نو از سفر به قلب کویر
+        </p>
       </div>
+
+
+
+      <!-- Quick Links -->
+      <div class="col-lg-2 col-md-4">
+        <h5 class="fw-bold mb-3 text-dark">لینک‌ها</h5>
+        <ul class="list-unstyled">
+          <li><a href="{% url 'main:home' %}" class="text-secondary text-decoration-none">خانه</a></li>
+          <li><a href="{% url 'main:hotels' %}" class="text-secondary text-decoration-none">هتل‌ها</a></li>
+          <li><a href="{% url 'main:restaurants' %}" class="text-secondary text-decoration-none">رستوران‌ها</a></li>
+          <li><a href="{% url 'main:panel' %}" class="text-secondary text-decoration-none">پنل من</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="col-lg-3 col-md-6">
+        <h5 class="fw-bold mb-3 text-dark">ارتباط با ما</h5>
+        <ul class="list-unstyled">
+          <li class="text-secondary">ایمیل: <a href="mailto:info@kermantrip.com" class="text-decoration-none">info@kermantrip.com</a></li>
+          <li class="text-secondary">تلفن: ۳۲۳۲۳۲۳۲</li>
+        </ul>
+      </div>
+
     </div>
-  </section>
-  
-  <div class="py-5 text-center">
-    <p class="mb-0 text-secondary fs--1 fw-medium">All rights KermanTrip</p>
+
+    <hr class="my-4">
+
+    <!-- Footer Bottom -->
+    <div class="text-center pb-3">
+      <p class="mb-0 text-secondary fs--1 fw-medium">
+        Web Architects | © 2025 <strong>KermanTrip</strong>
+      </p>
+    </div>
   </div>
-  
+</footer>

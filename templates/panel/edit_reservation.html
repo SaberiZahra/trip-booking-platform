@@ -1,0 +1,31 @@
+{% comment %} {% load static %}
+<link rel="stylesheet" href="{% static 'css/panel.css' %}">
+
+<div class="edit-container">
+    <h2>ویرایش رزرو</h2>
+    
+    <form method="post" class="edit-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn-save">ذخیره تغییرات</button>
+    </form>
+    
+    <a href="{% url 'main:panel' %}" class="back-link">← بازگشت به پنل</a>
+  </div>
+   {% endcomment %}
+
+   {# templates/panel/edit_reservation.html #}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/panel.css' %}">
+
+<div class="edit-container">
+  <h2>ویرایش رزرو</h2>
+
+  <form method="post" class="edit-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn-save">ذخیره تغییرات</button>
+  </form>
+
+  <a href="{% url 'main:panel' %}" class="back-link">← بازگشت به پنل</a>
+</div>

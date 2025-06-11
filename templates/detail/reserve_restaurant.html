@@ -1,0 +1,18 @@
+{% load static %}
+{% include 'partials/header.html' %}
+
+<link rel="stylesheet" href="{% static 'css/panel.css' %}">
+
+<div class="container">
+  <h2>رزرو میز در {{ restaurant.name }}</h2>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn-save">ثبت رزرو</button>
+  </form>
+
+  <a href="{% url 'main:restaurants' %}" class="back-link">← بازگشت به رستوران‌ها</a>
+</div>
+
+{% include 'partials/footer.html' %}
