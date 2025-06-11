@@ -9,6 +9,21 @@
 </head>
 <body>
 
+  {% comment %} to set email in the blank: {% endcomment %}
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const email = params.get('email');
+      if (email) {
+        const emailInput = document.querySelector('input[name="email"]');
+        if (emailInput) {
+          emailInput.value = email;
+        }
+      }
+    });
+  </script>
+  
+
   <form class="form" method="post" action="{% url 'main:register' %}">
     {% csrf_token %}
     <p class="form-title">ساخت حساب کاربری</p>

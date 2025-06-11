@@ -1,21 +1,64 @@
 {% load static %}
-<link rel="stylesheet" href="{% static 'css/panel.css' %}">
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ restaurant.name }}</title>
+    <link rel="stylesheet" href="{% static 'css/details.css' %}">
+</head>
+<body>
 
 <div class="container">
-  <h2>{{ restaurant.name }}</h2>
-  <img src="{% static 'images/restaurants/default.jpg' %}" alt="{{ restaurant.name }}" style="max-width:100%;border-radius:8px">
-  <p><strong>مکان:</strong> {{ restaurant.location }}</p>
-  <p><strong>قیمت سرانه:</strong> {{ restaurant.average_price }} تومان</p>
-  <p>{{ restaurant.description }}</p>
+    <div class="card">
+        <h1>
+            {{ restaurant.name }}
+            <div>
+                {% if hotel.rating|default:0 > 0 %}
+                {% for i in "12345"|slice:":hotel.rating"|make_list %}
+                  <span style="color:gold;">&#9733;</span>
+                {% endfor %}
+                {% for i in "12345"|slice:"hotel.rating:"|make_list %}
+                  <span style="color:#ccc;">&#9733;</span>
+                {% endfor %}
+              {% else %}
+                {# فقط ۵ ستاره خاکستری وقتی صفر هست #}
+                {% for i in "12345"|make_list %}
+                  <span style="color:#ccc;">&#9733;</span>
+                {% endfor %}
+              {% endif %}
+            </div>
+        </h1>
 
-  {% if user.is_authenticated %}
-  <hr>
-  <h3>رزرو میز</h3>
-  <form method="post" action="{% url 'main:reserve_restaurant' restaurant.id %}">
-      {% csrf_token %}
-      <button type="submit" class="btn-save">رزرو</button>
-  </form>
-  {% else %}
-  <p><a href="{% url 'main:login' %}">برای رزرو وارد شوید.</a></p>
-  {% endif %}
+        <div class="image-container">
+            {% if restaurant.image %}
+                <img src="{{ restaurant.image.url }}" alt="{{ restaurant.name }}">
+            {% else %}
+                <img src="{% static 'images/restaurants/default.jpg' %}" alt="{{ restaurant.name }}">
+            {% endif %}
+        </div>
+
+        <div class="info hotel-info">  {# کلاس hotel-info مثل هتل برای استایل #}
+            <p><strong>مکان:</strong> <span class="description-text">{{ restaurant.location }}</span></p>
+            <p><strong>توضیحات:</strong> <span class="description-text">{{ restaurant.description }}</span></p>
+            <p><strong>قیمت:</strong> {{ restaurant.average_price }} تومان</p>
+        </div>
+
+        {% if user.is_authenticated %}
+            <hr>
+
+            <a href="{% url 'main:home' %}" class="back-link">← بازگشت به صفحه اصلی</a>
+
+            <h2>رزرو میز</h2>
+            <form method="post" action="{% url 'main:reserve_restaurant' restaurant.id %}">
+                {% csrf_token %}
+                {{ form.as_p }}  {# فیلدهای فرم از view پاس داده شده #}
+                <button type="submit" class="btn">رزرو</button>
+            </form>
+        {% else %}
+            <p><a href="{% url 'main:login' %}">برای رزرو وارد شوید.</a></p>
+        {% endif %}
+    </div>
 </div>
+
+</body>
+</html>

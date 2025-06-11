@@ -12,26 +12,89 @@ from django.views.decorators.http import require_POST
 from django.views.generic import ListView
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
+from django.db import models
 
 from .models import Hotel, Restaurant, Reservation
 from .forms import CustomUserCreationForm, HotelReservationForm, RestaurantReservationForm
 
 
 def home(request):
-    return render(request, 'home.html')
+    # return render(request, 'home.html')
+    hotels = Hotel.objects.filter(is_available=True).order_by('-id')[:3]  # سه هتل آخر
+    return render(request, 'home.html', {'hotels': hotels})
 
 
 def login_register(request):
     return render(request, 'login.html')
 
 
-def hotels(request):
-    q = request.GET.get('q')
-    if q:
-        hotels = Hotel.objects.filter(name__icontains=q)
+@login_required
+def dashboard(request):
+    return render(request, 'panel.html')
+
+
+def register_view(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'حساب شما با موفقیت ساخته شد.')
+            return redirect('main:login')
     else:
-        hotels = Hotel.objects.all()
-    return render(request, 'hotels.html', {'hotels': hotels})
+        form = CustomUserCreationForm()
+    return render(request, 'register.html', {'form': form})
+
+
+def login_view(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            messages.success(request, 'ورود با موفقیت انجام شد.')
+            return redirect('main:home') 
+        else:
+            messages.error(request, 'ورود ناموفق بود. لطفاً اطلاعات را بررسی کنید.')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'login.html', {'form': form})
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('main:home') 
+
+
+def hotels(request):
+    q     = request.GET.get("q", "").strip()           # متن جست‌وجو
+    sort  = request.GET.get("sort", "new")             # فیلتر مرتب‌سازی
+
+    hotels = Hotel.objects.all()
+
+    # if q:                                              # جست‌وجو در نام و توضیح
+    #     hotels = hotels.filter(
+    #         models.Q(name__icontains=q) | models.Q(description__icontains=q)
+    #     )
+
+    if q:  # فقط جست‌وجو در عنوان
+        hotels = hotels.filter(name__icontains=q)
+    
+
+    # مرتب‌سازی (چند گزینهٔ ساده)
+    ordering_map = {
+        "new":        "-id",               # جدیدترین
+        "price_low":  "price_per_night",   # ارزان‌ترین
+        "price_high": "-price_per_night",  # گران‌ترین
+        "rating":     "-rating",           # بیشترین ستاره
+    }
+    hotels = hotels.order_by(ordering_map.get(sort, "-id"))
+
+    return render(request, "hotels.html", {
+        "hotels": hotels,
+        "q":      q,
+        "sort":   sort,
+    })
+
 
 
 def hotel_detail(request, pk):
@@ -76,12 +139,37 @@ def reserve_hotel(request, hotel_id):
 
 
 def restaurants(request):
-    q = request.GET.get('q')
-    if q:
-        restaurants = Restaurant.objects.filter(name__icontains=q)
-    else:
-        restaurants = Restaurant.objects.all()
-    return render(request, 'restaurants.html', {'restaurants': restaurants})
+    q     = request.GET.get("q", "").strip()           # متن جست‌وجو
+    sort  = request.GET.get("sort", "new")             # فیلتر مرتب‌سازی
+
+    restaurants = Restaurant.objects.all()
+
+    # if q:                                              # جست‌وجو در نام و توضیح
+    #     restaurants = restaurants.filter(
+    #         models.Q(name__icontains=q) | 
+    #         models.Q(description__icontains=q)
+    #     )
+
+    if q:  # فقط جست‌وجو در عنوان
+        restaurants = restaurants.filter(name__icontains=q)
+
+
+    # مرتب‌سازی (چند گزینهٔ ساده)
+    ordering_map = {
+        "new":        "-id",               # جدیدترین
+        "price_low":  "average_price",   # ارزان‌ترین
+        "price_high": "-average_price",  # گران‌ترین
+        "rating":     "-rating",           # بیشترین ستاره
+    }
+    restaurants = restaurants.order_by(ordering_map.get(sort, "-id"))
+
+    return render(request, "restaurants.html", {
+        "restaurants": restaurants,
+        "q":      q,
+        "sort":   sort,
+    })
+
+
 
 
 def restaurant_detail(request, pk):
@@ -125,20 +213,6 @@ def reserve_restaurant(request, restaurant_id):
         form = RestaurantReservationForm()
 
     return render(request, 'detail/reserve_restaurant.html', {'restaurant': restaurant, 'form': form})
-
-
-# @login_required
-# def reserve_hotel(request, hotel_id):
-#     hotel = Hotel.objects.get(id=hotel_id)
-#     Reservation.objects.create(user=request.user, hotel=hotel, date=date.today())
-#     return redirect('main:panel')   # ← namespace اضافه شد
-
-
-# @login_required
-# def reserve_restaurant(request, restaurant_id):
-#     restaurant = Restaurant.objects.get(id=restaurant_id)
-#     Reservation.objects.create(user=request.user, restaurant=restaurant, date=date.today())
-#     return redirect('main:panel')   # ← namespace اضافه شد
 
 
 @login_required
@@ -192,39 +266,13 @@ def delete_reservation(request, pk):
     return redirect('main:panel')
 
 
-def register_view(request):
-    if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'حساب شما با موفقیت ساخته شد.')
-            return redirect('main:login')
-    else:
-        form = CustomUserCreationForm()
-    return render(request, 'register.html', {'form': form})
+def hotel_detail(request, pk):
+    hotel = get_object_or_404(Hotel, pk=pk)
+    form = HotelReservationForm()
+    return render(request, "detail/hotel_detail.html", {"hotel": hotel, "form": form})
 
 
-def login_view(request):
-    if request.method == 'POST':
-        form = AuthenticationForm(data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            login(request, user)
-            messages.success(request, 'ورود با موفقیت انجام شد.')
-            return redirect('main:home') 
-        else:
-            messages.error(request, 'ورود ناموفق بود. لطفاً اطلاعات را بررسی کنید.')
-    else:
-        form = AuthenticationForm()
-    return render(request, 'login.html', {'form': form})
-
-
-def logout_view(request):
-    logout(request)
-    return redirect('main:home') 
-
-
-@login_required
-def dashboard(request):
-    # اگر داشبورد جداگانه می‌خواهی، می‌توانی تمپلیت دیگر بدهی
-    return render(request, 'panel.html')
+def restaurant_detail(request, pk):
+    restaurant = get_object_or_404(Restaurant, pk=pk)
+    form = RestaurantReservationForm()
+    return render(request, "detail/restaurant_detail.html", {"restaurant": restaurant, "form": form})

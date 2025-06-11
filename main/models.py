@@ -9,7 +9,8 @@ class Hotel(models.Model):
     description = models.TextField()
     price_per_night = models.IntegerField()
     is_available = models.BooleanField(default=True)
-    image = models.ImageField(upload_to='hotels/', null=True, blank=True)
+    image = models.ImageField(upload_to='images/hotels/', null=True, blank=True)
+    rating = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name
@@ -20,8 +21,9 @@ class Restaurant(models.Model):
     description = models.TextField()
     average_price = models.IntegerField()
     is_available = models.BooleanField(default=True)
-    image = models.ImageField(upload_to='restaurants/', null=True, blank=True)
-
+    image = models.ImageField(upload_to='images/restaurants/', null=True, blank=True)
+    rating = models.IntegerField(default=0)
+    
     def __str__(self):
         return self.name
 

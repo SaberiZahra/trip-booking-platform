@@ -25,4 +25,10 @@ urlpatterns = [
     path("register/", views.register_view, name="register"),
     path("login/", views.login_view, name="login"),
     path("logout/", views.logout_view, name="logout"),
+
+    #دیدن جزئیات
+    path("hotels/<int:pk>/", views.hotel_detail, name="hotel_detail"),
+    path("restaurants/<int:pk>/", views.restaurant_detail, name="restaurant_detail"),
+
+
 ]

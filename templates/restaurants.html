@@ -5,28 +5,32 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>هتل‌ها | KermanTrip</title>
-
+  <title>رستوران‌ها | KermanTrip</title>
   <link rel="stylesheet" href="{% static 'css/theme-rtl.min.css' %}">
 </head>
 <body>
 
-<section class="py-6" id="hotels">
+<section class="py-6" id="restaurants">
   <div class="container">
 
-    <!-- نوار ابزار بالا (خانه + سرچ + مرتب‌سازی) -->
+    <!-- نوار ابزار بالای صفحه -->
     <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
-      <a href="{% url 'main:home' %}" class="btn btn-outline-secondary d-flex align-items-center gap-1">
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
-             class="bi bi-arrow-right" viewBox="0 0 16 16">
-          <path fill-rule="evenodd"
-                d="M1 8a.5.5 0 0 1 .5-.5h10.793l-3.147-3.146a.5.5 0 1 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L12.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
-        </svg>
-        خانه
+
+      <!-- برگشت به خانه -->
+      <a href="{% url 'main:home' %}"
+         class="btn btn-outline-secondary d-flex align-items-center gap-1">
+         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+              class="bi bi-arrow-right" viewBox="0 0 16 16">
+           <path fill-rule="evenodd"
+                 d="M1 8a.5.5 0 0 1 .5-.5h10.793l-3.147-3.146a.5.5 0 1 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L12.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+         </svg>
+         خانه
       </a>
 
+      <!-- فرم جست‌وجو و مرتب‌سازی -->
       <form class="d-flex flex-wrap gap-2 ms-auto" method="get">
-        <input class="form-control" name="q" value="{{ q }}" placeholder="جست‌وجوی نام هتل…" style="min-width:160px">
+        <input class="form-control" name="q" value="{{ q }}"
+               placeholder="جست‌وجوی نام رستوران…" style="min-width:160px">
         <select class="form-select" name="sort" style="min-width:140px">
           <option value="new"        {% if sort == "new" %}selected{% endif %}>تازه‌ترین</option>
           <option value="price_low"  {% if sort == "price_low" %}selected{% endif %}>ارزان‌ترین</option>
@@ -37,28 +41,31 @@
       </form>
     </div>
 
-    <h2 class="fs-2 fw-bold text-center mb-5">هتل‌های کرمان</h2>
+    <h2 class="fs-2 fw-bold text-center mb-5">رستوران‌های کرمان</h2>
 
+    <!-- کارت‌ها: ۴-ستونه روی ≥lg -->
     <div class="row g-4">
-      {% for hotel in hotels %}
+      {% for restaurant in restaurants %}
         <div class="col-12 col-sm-6 col-lg-3">
           <div class="card h-100 shadow-sm border-0">
-            {% if hotel.image %}
-              <img class="card-img-top" src="{{ hotel.image.url }}" alt="{{ hotel.name }}">
+
+            {% if restaurant.image %}
+              <img class="card-img-top" src="{{ restaurant.image.url }}" alt="{{ restaurant.name }}">
             {% else %}
-              <img class="card-img-top" src="{% static 'images/dest/default-hotel.jpg' %}" alt="{{ hotel.name }}">
+              <img class="card-img-top" src="{% static 'images/restaurants/default.jpg' %}"
+                   alt="{{ restaurant.name }}">
             {% endif %}
 
             <div class="card-body d-flex flex-column">
 
-              <!-- نام + ستاره‌ها در یک خط -->
+              <!-- نام + ستاره‌ها کنار هم -->
               <div class="d-flex align-items-center mb-2" style="min-height:3rem;">
-                <a class="flex-grow-1 text-dark fw-semibold text-decoration-none"
-                   href="{% url 'main:hotel_detail' hotel.id %}">
-                  {{ hotel.name }}
+                <a class="flex-grow-1 fw-semibold text-dark text-decoration-none"
+                   href="{% url 'main:restaurant_detail' restaurant.id %}">
+                  {{ restaurant.name }}
                 </a>
                 <span>
-                  {% with rating=hotel.rating|default:0 %}
+                  {% with rating=restaurant.rating|default:0 %}
                   {% for i in "12345"|make_list %}
                     {% if forloop.counter <= rating %}
                       <span style="color:gold;">&#9733;</span>
@@ -70,21 +77,22 @@
                 </span>
               </div>
 
-              <p class="small mb-3 flex-grow-1" style="color:#e67e22;">
-                {{ hotel.description|truncatewords:24 }}
+              <!-- توضیح کوتاه -->
+              <p class="small flex-grow-1 mb-3" style="color:#e67e22;">
+                {{ restaurant.description|truncatewords:24 }}
               </p>
 
+              <!-- قیمت -->
               <p class="fw-bold text-primary mt-auto mb-0">
-                 {{ hotel.price_per_night|intcomma }} تومان
+                {{ restaurant.average_price|intcomma }} تومان
               </p>
             </div>
           </div>
         </div>
       {% empty %}
-        <p class="text-center">هتلی یافت نشد.</p>
+        <p class="text-center">رستورانی یافت نشد.</p>
       {% endfor %}
     </div>
-
   </div>
 </section>
 
